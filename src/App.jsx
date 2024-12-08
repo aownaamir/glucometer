@@ -6,16 +6,6 @@ import SignupPage from "./components/SignupPage";
 import CalibrationPage from "./components/CalibrationPage";
 
 function App() {
-  // return (
-  //   <div>
-  //     <HomePage />
-  //     <RegistrationForm />
-  //     <LoginPage />
-  //     <CalibrationForm />
-  //     <Spinner />
-  //     <MeasurementPage />
-  //   </div>
-  // );
   const router = createBrowserRouter([
     {
       path: "/",
