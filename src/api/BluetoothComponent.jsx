@@ -9,7 +9,7 @@ const BluetoothComponent = () => {
 
       const device = await navigator.bluetooth.requestDevice({
         acceptAllDevices: true,
-        optionalServices: ["180F"], // Add service UUIDs here
+        optionalServices: ["0x180F"], // Add service UUIDs here
       });
 
       setDeviceName(device.name);
