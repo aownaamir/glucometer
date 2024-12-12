@@ -1,54 +1,47 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 const BluetoothComponent = () => {
-  const [device, setDevice] = useState(null);
-  const [data, setData] = useState(null);
+  const [deviceName, setDeviceName] = useState(null);
 
-  const connectToDevice = async () => {
+  const connectToBluetooth = async () => {
     try {
       // Request a Bluetooth device
       const device = await navigator.bluetooth.requestDevice({
-        acceptAllDevices: true, // Or specify filters
-        optionalServices: ["battery_service"], // Specify required GATT services
+        acceptAllDevices: true,
+        optionalServices: ["battery_service"], // Add the UUIDs of services you need
       });
 
-      setDevice(device);
+      setDeviceName(device.name);
 
-      // Connect to the device's GATT server
+      // Connect to the device
       const server = await device.gatt.connect();
 
-      // Get a specific service
+      // Access a specific service
       const service = await server.getPrimaryService("battery_service");
 
-      // Get a specific characteristic
+      // Access a specific characteristic
       const characteristic = await service.getCharacteristic("battery_level");
 
-      // Read the value of the characteristic
+      // Read the value
       const value = await characteristic.readValue();
       const batteryLevel = value.getUint8(0);
 
-      setData(`Battery Level: ${batteryLevel}%`);
+      alert(`Battery level is ${batteryLevel}%`);
     } catch (error) {
-      console.error("Bluetooth Error:", error);
+      console.error("Bluetooth connection failed:", error);
     }
   };
 
   return (
-    <div className="min-h-screen py-28 bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 flex flex-col justify-center items-center relative overflow-hidden">
-      <h1 className="text-4xl font-bold text-blue-700 mb-4 z-10">
-        Bluetooth Demo
-      </h1>
+    <div className="p-4">
+      <h1 className="text-xl font-bold">Connect to Bluetooth</h1>
       <button
-        onClick={connectToDevice}
-        className="px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition"
+        onClick={connectToBluetooth}
+        className="bg-blue-500 text-white p-2 rounded mt-2"
       >
-        {device ? `Connected to ${device.name}` : "Connect to Bluetooth"}
+        Connect
       </button>
-      {data && (
-        <p className="text-center text-gray-700 text-lg max-w-md mb-8 z-10">
-          {data}
-        </p>
-      )}
+      {deviceName && <p>Connected to: {deviceName}</p>}
     </div>
   );
 };
