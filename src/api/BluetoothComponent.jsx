@@ -4,33 +4,21 @@ const BluetoothComponent = () => {
   const [deviceName, setDeviceName] = useState(null);
 
   const connectToBluetooth = async () => {
-    try {
-      // Request a Bluetooth device
-
-      const device = await navigator.bluetooth.requestDevice({
+    navigator.bluetooth
+      .requestDevice({
         acceptAllDevices: true,
         optionalServices: ["0000180f-0000-1000-8000-00805f9b34fb"], // Add service UUIDs here
+      })
+      .then((device) => {
+        console.log("Device discovered:", device);
+        return device.gatt.connect();
+      })
+      .then((server) => {
+        console.log("Connected to GATT server:", server);
+      })
+      .catch((error) => {
+        console.error("Error connecting to Bluetooth device:", error);
       });
-
-      setDeviceName(device.name);
-
-      // Connect to the device
-      const server = await device.gatt.connect();
-
-      // Access a specific service
-      const service = await server.getPrimaryService("battery_service");
-
-      // Access a specific characteristic
-      const characteristic = await service.getCharacteristic("battery_level");
-
-      // Read the value
-      const value = await characteristic.readValue();
-      const batteryLevel = value.getUint8(0);
-
-      alert(`Battery level is ${batteryLevel}%`);
-    } catch (error) {
-      console.error("Bluetooth connection failed:", error);
-    }
   };
 
   return (
