@@ -2,7 +2,7 @@ import { useState } from "react";
 import Spinner from "./Spinner";
 
 function Calibrate({ invasiveReadings, voltageReadings }) {
-  const [isCalibrating, setIsCalibrating] = useState(false); // To track if calibration is in progress
+  const [isCalibrating, setIsCalibrating] = useState(false);
   const [calibrationSuccess, setCalibrationSuccess] = useState(false);
   const data = [
     { invasive: { ...invasiveReadings } },
@@ -11,7 +11,7 @@ function Calibrate({ invasiveReadings, voltageReadings }) {
 
   const handleCalibrate = () => {
     setIsCalibrating(true);
-    // Simulate the calibration process (replace with actual logic)
+
     setTimeout(() => {
       setIsCalibrating(false);
       setCalibrationSuccess(true);
