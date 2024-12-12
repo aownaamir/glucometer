@@ -7,7 +7,7 @@ const BluetoothComponent = () => {
     navigator.bluetooth
       .requestDevice({
         acceptAllDevices: true,
-        optionalServices: ["0000180f-0000-1000-8000-00805f9b34fb"], // Add service UUIDs here
+        // optionalServices: ["0000180f-0000-1000-8000-00805f9b34fb"], // Add service UUIDs here
       })
       .then((device) => {
         console.log("Device discovered:", device);
