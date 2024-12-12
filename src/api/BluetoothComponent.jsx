@@ -6,9 +6,10 @@ const BluetoothComponent = () => {
   const connectToBluetooth = async () => {
     try {
       // Request a Bluetooth device
+
       const device = await navigator.bluetooth.requestDevice({
         acceptAllDevices: true,
-        optionalServices: ["battery_service"], // Add the UUIDs of services you need
+        optionalServices: ["180F"], // Add service UUIDs here
       });
 
       setDeviceName(device.name);
