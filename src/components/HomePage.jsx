@@ -33,11 +33,11 @@ const HomePage = () => {
             Measurement
           </button>
         </Link>
-        <Link to="/arduino">
+        {/* <Link to="/arduino">
           <button className="px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition">
             Arduino
           </button>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
