@@ -4,8 +4,7 @@ import LoginPage from "./components/LogInPage";
 import MeasurementPage from "./components/MeasurementPage";
 import SignupPage from "./components/SignupPage";
 import CalibrationPage from "./components/CalibrationPage";
-// import BluetoothComponent from "./api/BluetoothComponent";
-import Bluetooth from "./api/BluetoothArduino";
+import Arduino from "./components/Arduino";
 
 function App() {
   const router = createBrowserRouter([
@@ -14,8 +13,8 @@ function App() {
       element: <HomePage />,
     },
     {
-      path: "/bluetooth",
-      element: <Bluetooth />,
+      path: "/arduino",
+      element: <Arduino />,
     },
     {
       path: "/calibration",

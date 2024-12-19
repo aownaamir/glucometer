@@ -33,9 +33,9 @@ const HomePage = () => {
             Measurement
           </button>
         </Link>
-        <Link to="/bluetooth">
+        <Link to="/arduino">
           <button className="px-6 py-3 bg-green-600 text-white rounded-lg shadow-md hover:bg-green-700 transition">
-            Bluetooth
+            Arduino
           </button>
         </Link>
       </div>
