@@ -1,47 +1,67 @@
 import { useState } from "react";
 import Spinner from "./Spinner";
+import { Link } from "react-router-dom";
+import { calibrateApi } from "../api/arduino";
 
-function Calibrate({ invasiveReadings, voltageReadings }) {
-  const [isCalibrating, setIsCalibrating] = useState(false);
-  const [calibrationSuccess, setCalibrationSuccess] = useState(false);
+function Calibrate({
+  invasiveReadings,
+  voltageReadings,
+  isCalibrating,
+  setIsCalibrating,
+  calibrationSuccess,
+  setCalibrationSuccess,
+}) {
   const data = [
     { invasive: { ...invasiveReadings } },
     { voltages: { ...voltageReadings } },
   ];
 
-  const handleCalibrate = () => {
+  const handleCalibrate = async () => {
     setIsCalibrating(true);
 
-    setTimeout(() => {
+    try {
+      const response = await calibrateApi(data);
+      console.log(response);
+      // setReading(voltage);
       setIsCalibrating(false);
       setCalibrationSuccess(true);
-    }, 3000);
+    } catch (err) {
+      setIsCalibrating(false);
+      console.log(err);
+    }
   };
 
-  calibrationSuccess && console.log(data);
+  // calibrationSuccess && console.log(data);
 
   return (
-    <div className="bg-white shadow-lg rounded-lg p-6 max-w-lg w-full z-10 space-y-6">
+    <div className="bg-gray-800  shadow-lg rounded-lg p-6 max-w-lg w-full z-10 space-y-6">
       {isCalibrating ? (
         <div className="text-center">
-          <Spinner />
-          <p className="mt-4 text-gray-600">Calibrating, please wait...</p>
+          <Spinner type="big" />
+          <p className="mt-4 text-gray-400">Calibrating, please wait...</p>
         </div>
       ) : (
         <div className="text-center">
           {calibrationSuccess ? (
-            <p className="text-lg text-green-600 font-semibold">
-              Calibration Successful!
-            </p>
+            <div>
+              <p className="text-lg text-gray-300 font-semibold">
+                Calibration Successful!
+              </p>
+              <Link to="/">
+                <button className="w-full mt-7 bg-cyan-500 text-gray-900 py-2 px-6 rounded-lg hover:bg-cyan-400 transition shadow-lg">
+                  Home
+                </button>
+              </Link>
+            </div>
           ) : (
             <>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-300 mb-6">
                 Click the button below to calibrate your device with the entered
                 readings.
               </p>
               <button
                 onClick={handleCalibrate}
-                className="w-2/3 px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition"
+                className="w-2/3 px-6 py-3 bg-cyan-500 text-gray-900 font-semibold rounded-lg shadow-md hover:bg-cyan-400 transition"
               >
                 Calibrate
               </button>

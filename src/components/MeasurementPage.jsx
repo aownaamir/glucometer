@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Spinner from "./Spinner";
-import { measureApi } from "../api/arduino";
+import { measureApi, calculateApi } from "../api/arduino";
 import Refresh from "../../public/Refresh";
+import { Link } from "react-router-dom";
 
 const MeasurementPage = () => {
   const [isMeasuring, setIsMeasuring] = useState(false); //
@@ -9,78 +10,106 @@ const MeasurementPage = () => {
   const [reading, setReading] = useState(null);
   const [finalReading, setFinalReading] = useState(null);
 
+  function handleRefresh() {
+    // !isMeasuring && !reading && !finalReading && !isCalculating
+    setIsMeasuring(false);
+    setReading(null);
+    setFinalReading(null);
+    setIsCalculating(false);
+  }
+
   const handleMeasure = async () => {
     setIsMeasuring(true);
     setReading(null);
     setFinalReading(null);
 
     try {
-      const { glucoseLevel } = await measureApi();
-      setReading(glucoseLevel);
+      const { voltage } = await measureApi();
+      setReading(voltage);
       setIsMeasuring(false);
     } catch (err) {
+      setIsMeasuring(false);
       console.log(err);
     }
   };
 
-  const handleCalculate = () => {
+  const handleCalculate = async () => {
     setIsCalculating(true);
 
-    setTimeout(() => {
-      const finalCalculatedReading = reading + 10;
-      setFinalReading(finalCalculatedReading);
+    try {
+      const { glucoseLevel } = await calculateApi();
+      setFinalReading(glucoseLevel);
       setIsCalculating(false);
-    }, 3000);
+    } catch (err) {
+      setIsCalculating(false);
+      console.log(err);
+    }
   };
 
   return (
-    <div className="min-h-screen py-28 bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 flex flex-col justify-center items-center relative overflow-hidden px-6">
-      <h1 className="text-3xl font-bold text-blue-700 mb-6 z-10">
-        Measurement
-      </h1>
-      <p className="text-gray-600 mb-6 z-10 text-center max-w-lg">
-        Click the "Measure" button to begin taking a non-invasive glucose
-        reading. Once the reading is received, you can calculate the final
-        value.
-      </p>
-      {!isMeasuring && !reading && !finalReading && !isCalculating && (
-        <button
-          onClick={handleMeasure}
-          className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition"
-        >
-          Measure
-        </button>
-      )}
-      {isMeasuring && <Spinner />}
-      {reading && !isCalculating && !finalReading && (
-        <div className="text-center mt-6 flex flex-col items-center justify-center">
-          <p className="text-xl font-semibold text-gray-700">
-            Non-invasive reading: {`${reading}`} mg/dL
-          </p>
-          <div className="flex flex-col items-center">
-            <button
-              onClick={handleCalculate}
-              className="mt-4 px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition"
-            >
-              Calculate
-            </button>
-            <button
-              onClick={handleMeasure}
-              className="mt-4 text-white font-medium rounded-full flex items-center hover:rotate-180 hover:scale-110 transition-all duration-300"
-            >
-              <Refresh className="w-14 h-14 fill-blue-600" />
-            </button>
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex flex-col justify-center items-center">
+      <div className="bg-gray-700 shadow-xl rounded-lg p-8 w-96 text-center">
+        <h1 className="text-3xl font-bold text-cyan-400">Measurement</h1>
+        <p className="text-gray-300 mt-4">
+          Click the "Measure" button to begin taking a non-invasive glucose
+          reading. Once the reading is received, you can calculate the final
+          value.
+        </p>
+        {!isMeasuring && !reading && !finalReading && !isCalculating && (
+          <button
+            onClick={handleMeasure}
+            className="mt-6 bg-cyan-500 text-gray-900 py-2 px-8 rounded-lg hover:bg-cyan-400 transition shadow-md"
+          >
+            Measure
+          </button>
+        )}
+        {isMeasuring && <Spinner type="big" />}
+        {reading && !isCalculating && !finalReading && (
+          <div className="text-center mt-6 flex flex-col">
+            <p className="text-xl font-semibold text-white">
+              Non-invasive reading: {`${reading}`} V
+            </p>
+            <div className="mt-6 flex flex-col space-y-4">
+              <button
+                onClick={handleMeasure}
+                className="w-full bg-emerald-500 text-gray-900 py-2 px-6 rounded-lg hover:bg-emerald-400 transition shadow-lg"
+              >
+                Re-measure
+              </button>
+              <button
+                onClick={handleCalculate}
+                className="w-full bg-cyan-500 text-gray-900 py-2 px-6 rounded-lg hover:bg-cyan-400 transition shadow-lg"
+              >
+                Calculate
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-      {finalReading && (
-        <div className="text-center mt-6">
-          <p className="text-xl font-semibold text-gray-700">
-            Final Glucose Level: {finalReading} mg/dL
-          </p>
-        </div>
-      )}
-      {isCalculating && <Spinner />}
+        )}
+        {isCalculating && <Spinner type="big" />}
+        {finalReading && (
+          <div className="text-center flex flex-col mt-6">
+            <p className="text-xl font-semibold text-white">
+              Final Glucose Level: {finalReading} mg/dL
+            </p>
+            <div className="mt-6 flex flex-col space-y-4">
+              <Link to="/">
+                <button className="w-full bg-cyan-500 text-gray-900 py-2 px-6 rounded-lg hover:bg-cyan-400 transition shadow-lg">
+                  Home
+                </button>
+              </Link>
+              <button
+                onClick={handleRefresh}
+                className="w-full bg-emerald-500 text-gray-900 py-2 px-6 rounded-lg hover:bg-emerald-400 transition shadow-lg"
+              >
+                Measurement
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+      <footer className="mt-8 text-gray-500 text-sm">
+        &copy; 2024 Gluco Meter. All rights reserved.
+      </footer>
     </div>
   );
 };

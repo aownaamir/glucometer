@@ -5,6 +5,7 @@ import MeasurementPage from "./components/MeasurementPage";
 import SignupPage from "./components/SignupPage";
 import CalibrationPage from "./components/CalibrationPage";
 import Arduino from "./components/Arduino";
+import Chat from "./components/Chat";
 
 function App() {
   const router = createBrowserRouter([
@@ -13,8 +14,8 @@ function App() {
       element: <HomePage />,
     },
     {
-      path: "/arduino",
-      element: <Arduino />,
+      path: "/chat",
+      element: <Chat />,
     },
     {
       path: "/calibration",
