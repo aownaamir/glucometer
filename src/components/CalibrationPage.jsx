@@ -5,6 +5,7 @@ import NonInvasiveReadingsForm from "./NonInvasiveReadingsForm";
 import Calibrate from "./Calibrate";
 import { invasiveData, voltageData } from "../data/data";
 import { defaultCalibrateApi } from "../api/arduino";
+import Navigators from "./Navigators";
 // import Spinner from "./Spinner"; // Assuming you have a Spinner component
 
 const initInvasiveValues = {
@@ -161,6 +162,7 @@ const CalibrationPage = () => {
           />
         )}
       </div>
+      <Navigators />
     </div>
   );
 };

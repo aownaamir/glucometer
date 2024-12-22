@@ -1,14 +1,19 @@
 import { useState } from "react";
 import Spinner from "./Spinner";
-import { measureApi, calculateApi } from "../api/arduino";
+import { measureApi, calculateApi, modeApi } from "../api/arduino";
 import Refresh from "../../public/Refresh";
 import { Link } from "react-router-dom";
+import { IoMdHome } from "react-icons/io";
+import { IoStop } from "react-icons/io5";
+import Navigators from "./Navigators";
 
 const MeasurementPage = () => {
   const [isMeasuring, setIsMeasuring] = useState(false); //
   const [isCalculating, setIsCalculating] = useState(false);
   const [reading, setReading] = useState(null);
   const [finalReading, setFinalReading] = useState(null);
+  const [fasting, setFasting] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   function handleRefresh() {
     // !isMeasuring && !reading && !finalReading && !isCalculating
@@ -46,6 +51,19 @@ const MeasurementPage = () => {
     }
   };
 
+  const handleMode = async () => {
+    setFasting((pV) => !pV);
+    setLoading(true);
+    try {
+      const response = await modeApi({ fasting: !fasting });
+      console.log(response);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex flex-col justify-center items-center">
       <div className="bg-gray-700 shadow-xl rounded-lg p-8 w-96 text-center">
@@ -56,12 +74,38 @@ const MeasurementPage = () => {
           value.
         </p>
         {!isMeasuring && !reading && !finalReading && !isCalculating && (
-          <button
-            onClick={handleMeasure}
-            className="mt-6 bg-cyan-500 text-gray-900 py-2 px-8 rounded-lg hover:bg-cyan-400 transition shadow-md"
-          >
-            Measure
-          </button>
+          <div className="flex flex-col">
+            {/* <button
+              onClick={handleMode}
+              className="mt-6 bg-cyan-500 text-gray-900 py-2 px-8 rounded-lg hover:bg-cyan-400 transition shadow-md"
+            >
+              {loading ? (
+                <Spinner type="small" />
+              ) : (
+                `${fasting ? "Fasting" : "Post meal"}`
+              )}
+            </button> */}
+            <div className="mt-6 py-2 flex justify-between items-center">
+              <p className="text-gray-300">
+                My condition: &nbsp;&nbsp;{" "}
+                <span className="font-semibold text-cyan-400">
+                  {!loading && `${fasting ? "Fasting" : "Post meal"}`}{" "}
+                </span>
+              </p>
+              <button
+                onClick={handleMode}
+                className="bg-emerald-500 text-gray-900 py-2 px-8 rounded-lg hover:bg-emerald-400 transition shadow-lg"
+              >
+                {loading ? <Spinner /> : "Revert"}
+              </button>
+            </div>
+            <button
+              onClick={handleMeasure}
+              className="mt-6 bg-cyan-500 text-gray-900 py-2 px-8 rounded-lg hover:bg-cyan-400 transition shadow-md"
+            >
+              Measure
+            </button>
+          </div>
         )}
         {isMeasuring && <Spinner type="big" />}
         {reading && !isCalculating && !finalReading && (
@@ -107,6 +151,7 @@ const MeasurementPage = () => {
           </div>
         )}
       </div>
+      <Navigators />
       <footer className="mt-8 text-gray-500 text-sm">
         &copy; 2024 Gluco Meter. All rights reserved.
       </footer>

@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import BluetoothComponent from "../api/BluetoothComponent";
+import { IoMdHome } from "react-icons/io";
+import { IoStop } from "react-icons/io5";
+import Navigators from "./Navigators";
 
 const HomePage = () => {
   return (
@@ -22,7 +25,8 @@ const HomePage = () => {
           </Link>
         </div>
       </div>
-      <footer className="mt-8 text-gray-500 text-sm">
+      <Navigators />
+      <footer className="text-gray-500 text-sm">
         &copy; 2024 Gluco Meter. All rights reserved.
       </footer>
     </div>

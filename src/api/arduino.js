@@ -108,6 +108,39 @@ const defaultCalibrateApi = async (collectedData) => {
   //   console.error("Error sending data to Arduino:", error);
   // }
 };
+const modeApi = async (signal) => {
+  // try {
+  const response = await fetch("http://localhost:3000/api/v1/arduino/mode", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(signal),
+  });
+  const data = await response.json();
+  console.log("here");
+
+  return data;
+  // } catch (error) {
+  //   console.error("Error sending data to Arduino:", error);
+  // }
+};
+const stopApi = async (signal) => {
+  // try {
+  const response = await fetch("http://localhost:3000/api/v1/arduino/stop", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(signal),
+  });
+  const data = await response.json();
+
+  return data;
+  // } catch (error) {
+  //   console.error("Error sending data to Arduino:", error);
+  // }
+};
 
 export {
   sendDataToArduino,
@@ -116,4 +149,6 @@ export {
   takeReadingApi,
   calibrateApi,
   defaultCalibrateApi,
+  modeApi,
+  stopApi,
 };
