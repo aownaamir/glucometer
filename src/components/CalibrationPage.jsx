@@ -112,6 +112,7 @@ const CalibrationPage = () => {
       setCalibrationSuccess(true);
     } catch (err) {
       console.log(err);
+      setIsCalibrating(false);
     }
   };
 

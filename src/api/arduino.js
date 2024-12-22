@@ -73,42 +73,40 @@ const takeReadingApi = async () => {
   }
 };
 const calibrateApi = async (collectedData) => {
-  try {
-    const response = await fetch(
-      "http://localhost:3000/api/v1/arduino/calibrate",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ collectedData }),
-      }
-    );
-    const data = await response.json();
+  // try {
+  const response = await fetch(
+    "http://localhost:3000/api/v1/arduino/calibrate",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ collectedData }),
+    }
+  );
+  const data = await response.json();
 
-    return data;
-  } catch (error) {
-    console.error("Error sending data to Arduino:", error);
-  }
+  return data;
+  // }
+  //  catch (error) {
+  //   console.error("Error sending data to Arduino:", error);
+  // }
 };
 const defaultCalibrateApi = async (collectedData) => {
-  try {
-    const response = await fetch(
-      "http://localhost:3000/api/v1/arduino/default",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ collectedData }),
-      }
-    );
-    const data = await response.json();
+  // try {
+  const response = await fetch("http://localhost:3000/api/v1/arduino/default", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ collectedData }),
+  });
+  const data = await response.json();
 
-    return data;
-  } catch (error) {
-    console.error("Error sending data to Arduino:", error);
-  }
+  return data;
+  // } catch (error) {
+  //   console.error("Error sending data to Arduino:", error);
+  // }
 };
 
 export {
