@@ -1,8 +1,20 @@
-# React + Vite
+# Glucometer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Web app for a noninvasive glucometer device – 5th semester project for Electronic Circuit Design.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
+[View Live Project](https://glucometer.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠 Tech Stack
+React.js, Node.js, MongoDB, Mongoose, Tailwind CSS
+
+## ✨ Features
+- Start measuring
+- Calculate the reading
+- Compute final value
+- Set fasting or post-meal
+- Prescaling to fit for a person
+- Button to stop the physical alarm
+
+## 📜 License
+MIT License
