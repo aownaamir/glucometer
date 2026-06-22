@@ -6,13 +6,11 @@ A full-stack healthcare platform designed to work with a custom-built non-invasi
 
 ![App](screenshots/app.png)
 
----
 
 ## Live Demo
 
 https://glucometer.vercel.app/
 
----
 
 ## Overview
 
@@ -22,7 +20,6 @@ The system combines custom-built hardware with a web application that guides use
 
 Users can calibrate the device using real glucose readings, perform fasting or post-meal measurements, and interact directly with the physical device through the web application.
 
----
 
 ## Features
 
@@ -63,7 +60,6 @@ Users can calibrate the device using real glucose readings, perform fasting or p
 - Breadboard Prototyping
 - Custom Circuit Design
 
----
 
 ## How It Works
 
@@ -96,7 +92,6 @@ For custom calibration:
 
 6. Users can stop the device alarm directly from the application
 
----
 
 ## Architecture
 
@@ -123,7 +118,6 @@ For custom calibration:
      Alarm Control
 ```
 
----
 
 ## Screenshots
 
@@ -139,7 +133,6 @@ For custom calibration:
 
 ![Measurement](screenshots/measurement.png)
 
----
 
 ## Project Structure
 
@@ -156,7 +149,6 @@ glucometer/
 │   └── main.jsx
 ```
 
----
 
 ## Key Challenges
 
@@ -168,7 +160,6 @@ Integrating Arduino-based hardware with a web application required reliable seri
 
 The system needed to process incoming sensor values, apply calibration logic, update the UI, and control hardware alarms in real time.
 
----
 
 ## What I Learned
 
@@ -178,7 +169,6 @@ The system needed to process incoming sensor values, apply calibration logic, up
 - Calibration-based data processing
 - Building healthcare-oriented applications
 
----
 
 ## Future Improvements
 
@@ -191,12 +181,10 @@ The system needed to process incoming sensor values, apply calibration logic, up
 - Cloud synchronization
 - AI-powered glucose trend analysis
 
----
 
 ## Academic Context
 
 This project was developed as part of the **Electronic Circuit Design** course and combines embedded systems, sensor integration, and full-stack web development to create a practical healthcare monitoring solution.
 
----
 
 ## If you found this project interesting, consider giving it a star ⭐
