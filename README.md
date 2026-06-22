@@ -96,26 +96,27 @@ For custom calibration:
 ## Architecture
 
 ```text
+
+   Arduino Device
+   (Optical Sensors)
+           │
+           │
+           ▼
+┌─────────────────────┐
+│       Node.js       │
+└──────────┬──────────┘
+           │
+           │
+           ▼
 ┌─────────────────────┐
 │     React.js UI     │
 └──────────┬──────────┘
            │
-           ▼
-┌─────────────────────┐
-│   Node.js API       │
-└──────────┬──────────┘
            │
-   ┌───────┴────────┐
-   │                │
-   ▼                ▼
- MongoDB        Arduino Device
-(User Data)    (Optical Sensors)
-   │                │
-   └───────┬────────┘
            ▼
-     Calibration Engine
-     Glucose Estimation
-     Alarm Control
+      Calibration
+      Glucose Estimation
+      Alarm Control
 ```
 
 
